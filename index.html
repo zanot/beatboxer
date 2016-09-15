@@ -12,13 +12,14 @@ Inspired by https://www.youtube.com/watch?v=6O_92BTrUcA
   <style>
     body {
       background-color: black;
+      text-align: center;
     }
 
     p {
       margin: 0;
     }
 
-    button {
+    button.beat {
       background-color: black;
       padding: 10px;
       border: 10px solid white;
@@ -45,10 +46,19 @@ Inspired by https://www.youtube.com/watch?v=6O_92BTrUcA
       left: 0;
       right: 0;
       margin: auto;
+      text-align: left;
+    }
+
+    #reset {
+      margin-top: 200px;
+      font-size: 1.5rem;
     }
   </style>
 </head>
 <body>
+
+  <button id="reset">Reset all</button>
+
   <div id="grid"></div>
 
   <a href="https://github.com/siggy/beatboxer">
@@ -86,10 +96,23 @@ Inspired by https://www.youtube.com/watch?v=6O_92BTrUcA
       // 'sounds/maracas.wav',
     ];
 
+
     const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
     const buffers = [];
     const grid = document.getElementById('grid');
     const sLen = sounds.length;
+
+
+    // Reset all ticks
+    document.getElementById('reset').addEventListener('click', function () {
+      [].forEach.call(
+        grid.querySelectorAll('.beat'),
+        function (beat) {
+          beat.classList.remove('on');
+        }
+      );
+    }, false);
+
 
     for (var soundIndex = 0; soundIndex < sLen; ++soundIndex) {
       (function (index) {
